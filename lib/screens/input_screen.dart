@@ -1,3 +1,4 @@
+import 'package:components_app/Widgets/custom_input_field.dart';
 import 'package:flutter/material.dart';
 
 class InputScreen extends StatelessWidget {
@@ -5,6 +6,16 @@ class InputScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> myFormKey = GlobalKey<FormState>();
+
+    final Map<String, String> formValues = {
+      'firstName': 'carlos',
+      'lastName': 'Padron',
+      'email': 'c_0509@hotmail.com',
+      'password': '1234567',
+      'role': 'admin',
+    };
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Input Screen"),
@@ -12,34 +23,48 @@ class InputScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Column(
-            children: [
-              TextFormField(
-                autofocus: true,
-                initialValue: "",
-                textCapitalization: TextCapitalization.words,
-                onChanged: (str) {},
-                validator: (value) {
-                  if (value == null) return "Este campo es requerido";
-                  return value.length < 3 ? "Minimo de 3 letras" : null;
-                },
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                decoration: const InputDecoration(
-                  hintText: "Nombre dl usuario",
+          child: Form(
+            key: myFormKey,
+            child: Column(
+              children: [
+                const CustomInputField(
                   labelText: "Nombre",
-                  helperText: "Solo letras",
-                  counterText: "3 c",
-                  suffixIcon: Icon(Icons.group),
-                  prefixIcon: Icon(Icons.group),
-                  icon: Icon(Icons.abc),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(10),
-                    ),
-                  ),
+                  hintText: "Nombre del usuario",
                 ),
-              ),
-            ],
+                const SizedBox(height: 30),
+                const CustomInputField(
+                  labelText: "Apellido",
+                  hintText: "Apellido del usuario",
+                ),
+                const SizedBox(height: 30),
+                const CustomInputField(
+                  labelText: "Correo electronico",
+                  hintText: "correo",
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                const SizedBox(height: 30),
+                const CustomInputField(
+                  labelText: "Password",
+                  hintText: "Password del usuario",
+                  isPassword: true,
+                ),
+                const SizedBox(height: 30),
+                ElevatedButton(
+                  onPressed: () {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    if (myFormKey.currentState!.validate()) {
+                      print("Formulario no válido!!!!");
+                      return;
+                    }
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    child: const Text("Guardar"),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

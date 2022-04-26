@@ -1,0 +1,45 @@
+import 'package:flutter/material.dart';
+
+class CustomInputField extends StatelessWidget {
+  final String? hintText;
+  final String? labelText;
+  final String? helperText;
+  final IconData? icon;
+  final IconData? suffixicon;
+  final TextInputType? keyboardType;
+  final bool isPassword;
+  const CustomInputField({
+    Key? key,
+    this.hintText,
+    this.labelText,
+    this.helperText,
+    this.icon,
+    this.suffixicon,
+    this.keyboardType,
+    this.isPassword = false,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      initialValue: "",
+      textCapitalization: TextCapitalization.words,
+      keyboardType: keyboardType,
+      obscureText: isPassword,
+      onChanged: (str) {},
+      validator: (value) {
+        if (value == null) return "Este campo es requerido";
+        return value.length < 3 ? "Minimo de 3 letras" : null;
+      },
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      decoration: InputDecoration(
+        hintText: hintText,
+        labelText: labelText,
+        helperText: helperText,
+        suffixIcon: suffixicon == null ? null : Icon(suffixicon),
+        // prefixIcon: Icon(Icons.group),
+        icon: icon == null ? null : Icon(icon),
+      ),
+    );
+  }
+}

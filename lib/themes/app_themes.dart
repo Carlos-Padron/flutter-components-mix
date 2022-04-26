@@ -18,6 +18,33 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         primary: primary,
         splashFactory: NoSplash.splashFactory,
+        //shape: CircleBorder(),
+      ),
+    ),
+    inputDecorationTheme: const InputDecorationTheme(
+      floatingLabelStyle: TextStyle(color: primary),
+      //ENABLED BORDER
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.greenAccent),
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      //FOCUSED BORDER
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: primary),
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
       ),
     ),
   );

@@ -9,11 +9,11 @@ class InputScreen extends StatelessWidget {
     final GlobalKey<FormState> myFormKey = GlobalKey<FormState>();
 
     final Map<String, String> formValues = {
-      'firstName': 'carlos',
-      'lastName': 'Padron',
-      'email': 'c_0509@hotmail.com',
-      'password': '1234567',
-      'role': 'admin',
+      'firstName': '',
+      'lastName': '',
+      'email': '',
+      'password': '',
+      'role': '',
     };
 
     return Scaffold(
@@ -27,32 +27,41 @@ class InputScreen extends StatelessWidget {
             key: myFormKey,
             child: Column(
               children: [
-                const CustomInputField(
+                CustomInputField(
                   labelText: "Nombre",
                   hintText: "Nombre del usuario",
+                  formProperty: 'firstName',
+                  formValues: formValues,
                 ),
                 const SizedBox(height: 30),
-                const CustomInputField(
+                CustomInputField(
                   labelText: "Apellido",
                   hintText: "Apellido del usuario",
+                  formProperty: 'lastName',
+                  formValues: formValues,
                 ),
                 const SizedBox(height: 30),
-                const CustomInputField(
+                CustomInputField(
                   labelText: "Correo electronico",
                   hintText: "correo",
                   keyboardType: TextInputType.emailAddress,
+                  formProperty: 'email',
+                  formValues: formValues,
                 ),
                 const SizedBox(height: 30),
-                const CustomInputField(
+                CustomInputField(
                   labelText: "Password",
                   hintText: "Password del usuario",
                   isPassword: true,
+                  formProperty: 'password',
+                  formValues: formValues,
                 ),
                 const SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () {
+                    print(formValues);
                     FocusScope.of(context).requestFocus(FocusNode());
-                    if (myFormKey.currentState!.validate()) {
+                    if (!myFormKey.currentState!.validate()) {
                       print("Formulario no válido!!!!");
                       return;
                     }

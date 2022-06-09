@@ -6,3 +6,4 @@ export 'package:components_app/screens/home_screen.dart';
 export 'avatar_screen.dart';
 export 'animated_screen.dart';
 export 'input_screen.dart';
+import './slider_screen.dart';

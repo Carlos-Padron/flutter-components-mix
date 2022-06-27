@@ -55,6 +55,15 @@ class _ListViewBuilerScreenState extends State<ListViewBuilerScreen> {
         duration: new Duration(milliseconds: 300), curve: Curves.fastOutSlowIn);
   }
 
+  Future<void> onRefesh() async {
+    await Future.delayed(new Duration(seconds: 2));
+
+    final lastId = imagesIds.last;
+    imagesIds.clear();
+    imagesIds.add(lastId + 1);
+    add10();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -66,20 +75,23 @@ class _ListViewBuilerScreenState extends State<ListViewBuilerScreen> {
         removeBottom: true,
         child: Stack(
           children: [
-            ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              controller: scrollController,
-              itemCount: imagesIds.length,
-              itemBuilder: (BuildContext context, int index) {
-                return FadeInImage(
-                  width: double.infinity,
-                  height: 300,
-                  fit: BoxFit.cover,
-                  placeholder: const AssetImage("assets/flutterDash.png"),
-                  image: NetworkImage(
-                      "https://picsum.photos/500/300?image${imagesIds[index]}"),
-                );
-              },
+            RefreshIndicator(
+              onRefresh: onRefesh,
+              child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                controller: scrollController,
+                itemCount: imagesIds.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return FadeInImage(
+                    width: double.infinity,
+                    height: 300,
+                    fit: BoxFit.cover,
+                    placeholder: const AssetImage("assets/flutterDash.png"),
+                    image: NetworkImage(
+                        "https://picsum.photos/500/300?image${imagesIds[index]}"),
+                  );
+                },
+              ),
             ),
             if (isLoading)
               Positioned(
